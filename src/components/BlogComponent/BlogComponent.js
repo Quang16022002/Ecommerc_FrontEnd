@@ -25,7 +25,7 @@ const BlogComponent = () => {
   return (
     <div >
    
-   <p>adaad</p>
+  
    <div className="container px-5">
 
    <div className="blog-container">
