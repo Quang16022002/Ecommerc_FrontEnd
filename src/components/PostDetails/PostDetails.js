@@ -96,9 +96,18 @@ const PostDetail = ({ post, visible, onClose }) => {
             </div>
             <strong> {post.describe}</strong>
             <div
-              style={{ marginTop: 30 }}
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
+  style={{
+    marginTop: 30,
+  
+    justifyContent: 'center',
+  }}
+  dangerouslySetInnerHTML={{
+    __html: post.content.replace(
+      /<figure.*?>.*?<img/g,
+      '<figure style="text-align: center;"><img style="width:70%; height:auto"') // Thêm style cho figure để căn giữa hình ảnh
+      .replace(/<figcaption.*?>(.*?)<\/figcaption>/g, '<figcaption style="text-align: center;">$1</figcaption></figure>') // Thêm style cho figcaption để căn giữa
+  }}
+/>
           </div>
         </Descriptions.Item>
       </Descriptions>

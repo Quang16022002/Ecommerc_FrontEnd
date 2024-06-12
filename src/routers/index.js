@@ -11,6 +11,7 @@ import { AdminPage } from "../pages/AdminPage/AdminPage";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import OrderManagement from "../pages/OrderManagement/OrderManagement";
 import BlogPageDetails from "../pages/BlogPageDetails/BlogPageDetails";
+import introduce from "../pages/introduce/introduce";
 const routes  = [
 {
     path: '/',
@@ -42,6 +43,13 @@ const routes  = [
 {
     path: '/blog/:id',
     page: BlogPageDetails,
+    isShowHeader: true
+
+
+},
+{
+    path: 'introduce',
+    page: introduce,
     isShowHeader: true
 
 

@@ -7,7 +7,9 @@ import { getBase64 } from "../../utils";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import { toast } from "react-toastify";
 import PostDetail from "../PostDetails/PostDetails"; // Import the PostDetail component
-import TinymceEditor from "../TinymceEditor/TinymceEditor";
+import Editors from '../Editor/Editor'; // Import CKEditorComponent
+
+
 import moment from 'moment';
 const { Option } = Select;
 
@@ -29,7 +31,9 @@ const TableComponentPost = () => {
   const handleEditorChange = (content) => {
     // Define handleEditorChange function
     setContent(content);
+    console.log('content', content)
   };
+  
   useEffect(() => {
     const token = localStorage.getItem("access_token");
     if (token) {
@@ -95,7 +99,7 @@ const TableComponentPost = () => {
   const handleSave = async () => {
     try {
       const values = await form.validateFields();
-  
+    
       setLoading(true);
       const base64Images = imageUrls.map((url) => {
         const base64Prefix = "data:image/jpeg;base64,";
@@ -103,6 +107,7 @@ const TableComponentPost = () => {
           ? url
           : base64Prefix + url.split(",")[1];
       });
+      console.log('Content:', content); // Add this line to log the content
       await PostService.updatePost(
         selectedPost._id,
         {
@@ -122,6 +127,7 @@ const TableComponentPost = () => {
       setLoading(false);
     }
   };
+  
   
 
   const handleDeletePost = async (postId) => {
@@ -457,15 +463,19 @@ const TableComponentPost = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            label="Nội dung"
-            name="content"
-            rules={[{ required: true, message: "Vui lòng nhập nội dung" }]}
-          >
-            <TinymceEditor
-              value={content} // Pass value prop
-              onEditorChange={handleEditorChange} // Ensure you have this function defined
-            />
-          </Form.Item>
+  label="Nội dung"
+  name="content"
+  rules={[{ required: true, message: "Vui lòng nhập nội dung" }]}
+>
+  {/* Use CKEditorComponent and pass the onEditorChange */}
+  <Editors
+    value={content} // Pass value prop
+  
+    onChange={handleEditorChange}
+     // Ensure you have this function defined
+  />
+</Form.Item>
+
         </Form>
       </Modal>
     </div>

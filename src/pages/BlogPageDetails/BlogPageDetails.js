@@ -5,6 +5,7 @@ import moment from "moment";
 import "./BlogPageDetails.scss";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
+import BlogComponent from '../../components/BlogComponent/BlogComponent';
 
 const BlogPageDetails = () => {
   const { id } = useParams();
@@ -87,7 +88,8 @@ const BlogPageDetails = () => {
                         style={{ marginRight: 5 }}
                         className="fa-regular fa-calendar"
                       ></i>
-                      Ngày đăng: {moment(post?.data.createdAt).format("DD/MM/YYYY")}
+                      Ngày đăng:{" "}
+                      {moment(post?.data.createdAt).format("DD/MM/YYYY")}
                     </span>
                   </div>
                 </div>
@@ -98,13 +100,32 @@ const BlogPageDetails = () => {
               </div>
               <strong>{post?.data.describe}</strong>
               <div
-                style={{ marginTop: 30 }}
-                dangerouslySetInnerHTML={{ __html: post?.data.content }}
+                style={{
+                  marginTop: 30,
+                  justifyContent: "center",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: post?.data.content
+                    .replace(
+                      /<figure.*?>.*?<img/g,
+                      '<figure style="text-align: center;"><img style="width:70%; height:auto"'
+                    ) // Thêm style cho figure để căn giữa hình ảnh
+                    .replace(
+                      /<figcaption.*?>(.*?)<\/figcaption>/g,
+                      '<figcaption style="text-align: center; padding: 5px; width: 70%; background-color: rgb(242, 242, 242); margin: auto;">$1</figcaption></figure>'
+                    ), // Thêm style cho figcaption để căn giữa, margin-top 20px, width 70%, và background màu đỏ
+                }}
               />
             </div>
           </div>
         </div>
+        <div style={{ padding: 0 }} className="blog-left col-md-8 ">
+            <h2>BÀI VIẾT LIÊN QUAN</h2>
+            <span></span>
+          
+          </div>
       </div>
+      <BlogComponent/>
       <FooterComponent />
     </div>
   );

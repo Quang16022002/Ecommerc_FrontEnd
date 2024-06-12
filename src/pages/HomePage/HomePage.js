@@ -8,6 +8,7 @@ import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import HomeSlider from "../../components/HomeSlider/HomeSlider";
 import * as  ProductService from '../../services/ProductService'
 import { useQuery } from '@tanstack/react-query';
+import BlogComponent from "../../components/BlogComponent/BlogComponent";
 const HomePage = () => {
   
   const fetchProductAll = async () => {
@@ -81,7 +82,7 @@ const HomePage = () => {
         </div>
       </section>
       <div className="col-lg-9  container px-5 ">
-        <div className="products row d-flex flex-wrap">
+        <div className="products row ">
           {products?.data?.map((product) => {
             return(
               <CartComponents
@@ -277,15 +278,16 @@ const HomePage = () => {
           </div>
         </div>
       </section> */}
-      <section className="">
-      <div className="row new_product_area-left justify-content-center ">
+      <section className="p-5">
+      <div className="row new_product_area-left justify-content-center  ">
           <div className="col-lg-12">
             <div class="main_title">
               <h2>
-                <span>bài viết mới nhất</span>
+                <span>BÀI VIẾT MỚI NHẤT</span>
               </h2>
               <p>Những bài blog về thời trang mới nhất</p>
             </div>
+            <BlogComponent/>
           </div>
         </div>
       </section>

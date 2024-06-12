@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AddPost.scss";
 import * as PostService from "../../services/PostService";
 import { getBase64 } from "../../utils";
 import AddCategoryModal from "../AddCategoryModal/AddCategoryModal";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import { toast } from "react-toastify";
-import TinymceEditor from '../TinymceEditor/TinymceEditor'; // Import TinymceEditor
+import Editors from '../Editor/Editor'; // Import CKEditorComponent
+
 
 const AddPost = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -61,34 +62,34 @@ const AddPost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     const formErrors = {};
     if (!statePost.title) {
       formErrors.title = "Vui lòng nhập tiêu đề bài viết.";
     }
-
+  
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
       setIsLoading(false);
       return;
     }
-
+  
     const imageBase64List = [];
     for (const file of selectedImages) {
       const base64 = await getBase64(file);
       imageBase64List.push(base64);
     }
-
+  
     const updatedStatePost = {
       ...statePost,
       image: imageBase64List,
     };
-
+  
     try {
       await PostService.createPost(updatedStatePost);
       setStatePost({
         title: "",
-        author: "",
+        author: "", // Đặt trường author về rỗng
         image: [],
         describe: "",
         content: "",
@@ -99,9 +100,11 @@ const AddPost = () => {
     } catch (error) {
       console.error("Error creating post:", error);
     }
-
+  
     setIsLoading(false);
   };
+  
+  
 
   const handleCancel = () => {
     setStatePost({
@@ -236,10 +239,23 @@ const AddPost = () => {
           </div>
           <div className="form-group col-md-12">
             <label className="control-label">Nội dung bài viết</label>
-            <TinymceEditor
-              value={statePost.content}
-              onEditorChange={handleEditorChange}
-            />
+            <Editors
+  value={statePost.content}
+  onChange={handleEditorChange}
+  config={{
+
+    styles: [
+      {
+        name: 'Default',
+        element: 'img',
+        styles: {
+          width: '100%',
+        },
+      },
+    ],
+  }}
+/>
+
           </div>
 
           <div className="form-group col-md-12">

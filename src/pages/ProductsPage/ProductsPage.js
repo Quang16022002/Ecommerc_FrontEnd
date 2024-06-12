@@ -154,7 +154,7 @@ const ProductsPage = () => {
               </div>
             </div>
             <div className="col-lg-9">
-              <div className="products row d-flex flex-wrap">
+              <div className="products row ">
                 {products?.data
                   ?.filter((product) =>
                     (selectedType === null || product.type === selectedType) &&
