@@ -16,7 +16,7 @@ export const AdminPage = () => {
   const items = [
     {
       key: "user",
-      icon: <UserOutlined />,
+      icon: <UserOutlined/>,
       label: "Quản lý người dùng",
     },
     {

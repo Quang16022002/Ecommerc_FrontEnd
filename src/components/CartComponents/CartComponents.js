@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CartComponents.scss';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addOrderProduct } from '../../redux/counter/orderSlice';
 import { toast } from 'react-toastify';
+import QuickViewComponent from '../QuickViewComponent/QuickViewComponent';
 
 const CartComponents = (props) => {
+  const [isQuickViewVisible, setQuickViewVisible] = useState(false);
   const { id, countInStock, descriptions, image, name, price, rating, type, original_price } = props;
   const dispatch = useDispatch();
   const location = useLocation();
@@ -44,7 +46,13 @@ const CartComponents = (props) => {
     console.error('Invalid product ID:', id);
     return null;
   }
+  const handleQuickView = () => {
+    setQuickViewVisible(true);
+  };
 
+  const closeQuickView = () => {
+    setQuickViewVisible(false);
+  };
   return (
     <div className={`col-lg-${isProductsPage ? '4' : '3'} col-md-6`}>
       <div className="single-product">
@@ -57,8 +65,11 @@ const CartComponents = (props) => {
             ) : (
               <img style={{ width: '90%' }} className="img-fluid" src={image} alt={name} />
             )}
-            <div className="p_icon">
-              <Link to={`/product-detail/${id}`}>
+            <div
+           
+            className="p_icon quickview">
+              <Link 
+               onClick={handleQuickView}>
                 <i className="fa-regular fa-eye"></i>
               </Link>
               <a href="#">
@@ -93,6 +104,12 @@ const CartComponents = (props) => {
           </div>
         </div>
       </div>
+      {isQuickViewVisible && (
+        <QuickViewComponent
+          product={{ id, countInStock, descriptions, image, name, price, rating, type, original_price }}
+          onClose={closeQuickView}
+        />
+      )}
     </div>
   );
 };
