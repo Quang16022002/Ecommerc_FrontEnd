@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "./AdminUser.scss";
 import TimeComponent from "../TimeCompnent/TimeComponent";
 import TableComponentProduct from "../TableComponentProduct/TableComponentProduct";
-import AddUser from "../AddUser/AddUser";
-import TableComponentUser from "../TableComponentProduct/TableComponentUser";
 import TableComponentOrder from "../TableComponentProduct/TableComponentOrder";
 import AddOrder from "../AddOrder/AddOrder";
 

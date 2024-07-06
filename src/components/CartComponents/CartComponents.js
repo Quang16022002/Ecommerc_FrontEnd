@@ -3,6 +3,7 @@ import './CartComponents.scss';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addOrderProduct } from '../../redux/counter/orderSlice';
+import { addFavoriteProduct } from '../../redux/counter/favoriteSlice'; // Import addFavoriteProduct
 import { toast } from 'react-toastify';
 import QuickViewComponent from '../QuickViewComponent/QuickViewComponent';
 
@@ -27,19 +28,32 @@ const CartComponents = (props) => {
   const isProductsPage = location.pathname === '/products';
 
   const handleAddCart = () => {
-   
-      dispatch(addOrderProduct({
-        orderItem: {
-          name,
-          amount: 1,
-          image: image,
-          price,
-          product: id,
-          original_price,
-        }
-      }));
-      toast.success('Sản phẩm đã được thêm vào giỏ hàng');
-  
+    dispatch(addOrderProduct({
+      orderItem: {
+        name,
+        amount: 1,
+        image: image,
+        price,
+        product: id,
+        original_price,
+      }
+    }));
+    toast.success('Sản phẩm đã được thêm vào giỏ hàng');
+  };
+
+  const handleAddFavorite = () => {
+    dispatch(addFavoriteProduct({
+      id,
+      name,
+      image,
+      price,
+      original_price,
+      rating,
+      descriptions,
+      countInStock,
+      type,
+    }));
+    toast.success('Sản phẩm đã được thêm vào danh sách yêu thích');
   };
 
   if (!isValidObjectId(id)) {
@@ -53,6 +67,7 @@ const CartComponents = (props) => {
   const closeQuickView = () => {
     setQuickViewVisible(false);
   };
+
   return (
     <div className={`col-lg-${isProductsPage ? '4' : '3'} col-md-6`}>
       <div className="single-product">
@@ -65,18 +80,15 @@ const CartComponents = (props) => {
             ) : (
               <img style={{ width: '90%' }} className="img-fluid" src={image} alt={name} />
             )}
-            <div
-           
-            className="p_icon quickview">
-              <Link 
-               onClick={handleQuickView}>
+            <div className="p_icon quickview">
+              <Link onClick={handleQuickView}>
                 <i className="fa-regular fa-eye"></i>
               </Link>
-              <a href="#">
+              <a onClick={handleAddFavorite}>
                 <i className="fa-regular fa-heart"></i>
               </a>
-              <a onClick={handleAddCart} >
-                <i  className="fa-solid fa-cart-plus"></i>
+              <a onClick={handleAddCart}>
+                <i className="fa-solid fa-cart-plus"></i>
               </a>
             </div>
           </div>

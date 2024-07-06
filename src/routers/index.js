@@ -12,6 +12,7 @@ import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import OrderManagement from "../pages/OrderManagement/OrderManagement";
 import BlogPageDetails from "../pages/BlogPageDetails/BlogPageDetails";
 import introduce from "../pages/introduce/introduce";
+import FavoriteProductsPage from "../pages/FavoriteProductsPage/FavoriteProductsPage";
 const routes  = [
 {
     path: '/',
@@ -77,6 +78,13 @@ const routes  = [
 
 },
 {
+    path: '/favorite-page',
+    page: FavoriteProductsPage,
+    isShowHeader: true
+
+
+},
+{
     path: '/profile-user',
     page: ProfilePage,
     isShowHeader: true
@@ -102,8 +110,6 @@ const routes  = [
     page: AdminPage,
     isShowHeader: true,
     isPrivate: true
-
-
 },
 {
     path: '*',
